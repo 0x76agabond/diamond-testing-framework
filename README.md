@@ -15,22 +15,6 @@ It uses isolated runners for complex integration logic by combining:
 
 The goal is to provide an elegant way to run large, cross-module test logic inside a single test case — without crashing the whole suite.
 
----
-## Requirements
-- Foundry 
-- Solidity 
-- .env with `CUSTOMER_KEY` //private key for deploy contract  
-- foundry.toml with `rpc_endpoints`
-
-## Getting Started
-1. Clone repo  
-2. Run `forge install` (if needed)  
-3. Create `.env`
-4. Add `rpc_endpoints`
-5. forge build 
-6. forge test TestSetupDiamond.t -vvv
----
-
 ## Motivation
 
 When I first researched **EIP-2535 (Diamond Standard)**, the most frustrating thing was how people (and even AI tools like GPT or Gemini) kept calling it *too complicated*.  
@@ -102,6 +86,22 @@ The idea is simple:
 - **TestSetupDiamond.t.sol** adds an abstraction layer for modular DiamondCuts using the `tPrototype` / `tFacet` pattern.
 
 ---
+
+## Requirements
+- Foundry 
+- Solidity 
+- .env with `CUSTOMER_KEY` //private key for deploy contract  
+- foundry.toml with `rpc_endpoints`
+
+## Getting Started
+1. Clone repo  
+2. Run `forge install` (if needed)  
+3. Create `.env`
+4. Add `rpc_endpoints`
+5. forge build 
+6. forge test TestSetupDiamond.t -vvv
+---
+
 
 ## Example
 
