@@ -3,7 +3,7 @@
 
 /******************************************************************************\
 * Author: Hoang <ginz1504@gmail.com>
-* Contact: https://github.com/0x17agabond 
+* Contact: https://github.com/0x76agabond 
 * =============================================================================
 * Diamond Testing via OOP (DTO)
 /******************************************************************************/
@@ -12,8 +12,7 @@ pragma solidity ^0.8.26;
 
 import "forge-std/Test.sol";
 
-import {tPrototype} from "../test/tContract/tPrototype.sol";
-import {IDiamondCut, tDiamondCut} from "../test/tContract/Implement/tDiamondCut.sol";
+import {Diamond, CutUtil} from "../test/tContract/tPrototype.sol";
 
 import {DiamondCutFacet} from "../src/facets/DiamondCutFacet.sol";
 import {IDiamondLoupe, tDiamondLoupe} from "../test/tContract/Implement/tDiamondLoupe.sol";
@@ -46,17 +45,11 @@ contract TestSetupDiamond is Test {
 
     function setUp() public {
         vm.createSelectFork(vm.rpcUrl("opbnb"));
-        key_owner = vm.envUint("CUSTOMER_KEY");
+        key_owner = uint256(keccak256(abi.encodePacked("demo key", block.timestamp)));
+        address user = vm.addr(key_owner);
+        vm.deal(user, 10 ether);
+        vm.label(user, "demo-user");
         setupDiamond();
-    }
-
-    // Because all tFacet (tAdd1Facet, tAdd2Facet...) inherit tPrototype we can setup it like this
-    function cutHelper(tPrototype temp, bytes memory data) internal 
-    {
-        IDiamondCut.FacetCut[] memory cut; 
-        temp.setUp();
-        cut= temp.buildCut();
-        IDiamondCut(address(diamond)).diamondCut(cut, address(diamond), data);
     }
 
     function setupDiamond() internal
@@ -71,30 +64,34 @@ contract TestSetupDiamond is Test {
                 
         // start setup here
         {
+            console.log(" ================================== ");
+            console.log(" setupDiamond ");
+            console.log(" ================================== ");
+
             // Base utility facets
-            cutHelper(new tDiamondLoupe(), "");  
+            console.log(CutUtil.cutHelper(diamond, new tDiamondLoupe(), ""));  
 
             // Functional modules              
-            cutHelper(new tAdd1Facet(), "");   
-            cutHelper(new tAdd2Facet(), "");
-            cutHelper(new tAdd3Facet(), "");
-            cutHelper(new tAdd4Facet(), "");
-            cutHelper(new tAdd5Facet(), "");
-            cutHelper(new tAdd6Facet(), "");
-            cutHelper(new tAdd7Facet(), "");
-            cutHelper(new tAdd8Facet(), "");
-            cutHelper(new tAdd9Facet(), "");
-            cutHelper(new tAdd10Facet(), "");
-            cutHelper(new tAdd11Facet(), "");
-            cutHelper(new tAdd12Facet(), "");
-            cutHelper(new tAdd13Facet(), "");
-            cutHelper(new tAdd14Facet(), "");
-            cutHelper(new tAdd15Facet(), "");
-            cutHelper(new tAdd16Facet(), "");
-            cutHelper(new tAdd17Facet(), "");
+            console.log(CutUtil.cutHelper(diamond, new tAdd1Facet(), ""));   
+            console.log(CutUtil.cutHelper(diamond, new tAdd2Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd3Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd4Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd5Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd6Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd7Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd8Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd9Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd10Facet(),""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd11Facet(),""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd12Facet(),""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd13Facet(),""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd14Facet(),""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd15Facet(),""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd16Facet(),""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd17Facet(),""));
 
             // Initialization facet (with parameters)
-            cutHelper(new tAddFacet(), abi.encodeWithSelector(IAddFacet.init.selector, 500));   
+            console.log(CutUtil.cutHelper(diamond, new tAddFacet(), abi.encodeWithSelector(IAddFacet.init.selector, 500)));   
         }
 
         vm.stopPrank();
@@ -108,17 +105,27 @@ contract TestSetupDiamond is Test {
 
         {
             console.log(" ================================== ");
+            console.log(" IDiamondLoupe ");
+            console.log(" ================================== ");
             address[] memory facets = IDiamondLoupe(address(diamond)).facetAddresses();
             for (uint i = 0; i < facets.length; i++) {
                 console.log(address(facets[i]));
             }
         }
         {
+            console.log(" ================================== ");
+            console.log(" IAdd17Facet(address(diamond)).whoami17() ");
+            console.log(" ================================== ");
             console.log(IAdd17Facet(address(diamond)).whoami17());
         }
         
         uint256 summer = 0;
         
+        console.log(" ================================== ");
+        console.log(" test_massive_integration ");
+        console.log(" use Scope {} ");
+        console.log(" ================================== ");
+
         // use Scope {}
         {
             summer = IAdd1Facet(address(diamond)).add1(summer);
@@ -166,7 +173,10 @@ contract TestSetupDiamond is Test {
             assertEq(summer, 45, "Summer should be 45 after add9");
         }
 
-        // use Try / Catch pattern
+        console.log(" ================================== ");
+        console.log(" test_massive_integration ");
+        console.log(" use Try / Catch pattern ");
+        console.log(" ================================== ");        
         {
             try IAdd10Facet(address(diamond)).add10(summer) 
                 returns (uint256 newSummer) {
@@ -242,6 +252,10 @@ contract TestSetupDiamond is Test {
         }
 
         // handle Failpath
+        console.log(" ================================== ");
+        console.log(" test_massive_integration ");
+        console.log(" use Try / Catch pattern - Failpath ");
+        console.log(" ================================== ");    
         {
             try IAdd1Facet(address(diamond)).add1error() {
                 console.log("add1error did not revert");

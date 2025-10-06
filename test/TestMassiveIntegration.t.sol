@@ -48,10 +48,8 @@ import {Add15Facet} from "../src/facets/add/Add15Facet.sol";
 import {Add16Facet} from "../src/facets/add/Add16Facet.sol";
 import {Add17Facet} from "../src/facets/add/Add17Facet.sol";
 
-import {DiamondCutFacet, tDiamondCut, IDiamondCut} from "../test/tContract/Implement/tDiamondCut.sol";
-import {DiamondLoupeFacet, tDiamondLoupe, IDiamondLoupe} from "../test/tContract/Implement/tDiamondLoupe.sol";
-import {IAddFacet} from "../src/interfaces/add/IAddFacet.sol";
-import {AddFacet} from "../src/facets/add/AddFacet.sol";
+import {DiamondCutFacet, IDiamondCut} from "../test/tContract/Implement/tDiamondCut.sol";
+import {DiamondLoupeFacet, IDiamondLoupe} from "../test/tContract/Implement/tDiamondLoupe.sol";
 
 import {Diamond} from "../src/Diamond.sol";
 
@@ -63,7 +61,7 @@ contract TestMassiveIntegration is Test {
     function setUp() public {
         vm.createSelectFork(vm.rpcUrl("opbnb"));
         key_owner = vm.envUint("CUSTOMER_KEY");
-        DiamondInit();
+        diamondInit();
     }
 
     // Init facet
@@ -71,7 +69,7 @@ contract TestMassiveIntegration is Test {
     // This function demonstrates the Monolithic way to initialize a Diamond 
     // for a test. It involves manually deploying and cutting each Facet one-by-one, resulting in a long, repetitive setup function.
     // TestInitDiamondWithDTO.t.sol
-    function DiamondInit() internal {
+    function diamondInit() internal {
         vm.startPrank(vm.addr(key_owner));
         DiamondCutFacet cutFacet = new DiamondCutFacet();
         diamond = new Diamond(address(vm.addr(key_owner)), address(cutFacet));

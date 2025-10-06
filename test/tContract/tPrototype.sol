@@ -8,6 +8,7 @@ pragma solidity ^0.8.19;
 * Diamond Testing via OOP (DTO)
 /******************************************************************************/
 
+import {Diamond} from "../../src/Diamond.sol";
 import {IDiamondCut} from "../../src/interfaces/IDiamondCut.sol";
 import "forge-std/Test.sol";
 
@@ -33,3 +34,16 @@ abstract contract tPrototype is Test {
         return cut;
     }
 }
+
+library CutUtil  
+{
+    // Because all tFacet (tAdd1Facet, tAdd2Facet...) inherit tPrototype we can setup it like this
+    function cutHelper(Diamond diamond, tPrototype temp, bytes memory data) internal returns (address)
+    {
+        IDiamondCut.FacetCut[] memory cut; 
+        temp.setUp();
+        cut= temp.buildCut();
+        IDiamondCut(address(diamond)).diamondCut(cut, address(diamond), data);
+        return(address(temp));
+    }
+} 
