@@ -81,10 +81,10 @@ The idea is simple:
 ---
 
 ## Note
-- **TestAddFacet.t** is a simple unit test for diamond
-- **TestMassiveIntegration.t.sol** shows how to use scoped `{}` blocks and `try/catch` to handle large initialization and test flows.  
-- **TestSetupDiamond.t.sol** adds an abstraction layer for modular DiamondCuts using the `tPrototype` / `tFacet` pattern.
-
+- **/test/TestAddFacet.t** is a simple unit test for diamond
+- **/test/TestMassiveIntegration.t.sol** shows how to use scoped `{}` blocks and `try/catch` to handle large initialization and test flows.  
+- **/test/TestSetupDiamond.t.sol** adds an abstraction layer for modular DiamondCuts using the `tPrototype` / `tFacet` pattern.
+- Since this is a `test framework`, you should check `test` directory for example
 ---
 
 ## Requirements
@@ -98,7 +98,6 @@ The idea is simple:
 3. Add `rpc_endpoints`
 4. forge build 
 5. forge test TestSetupDiamond.t -vvv
-* Since this is a `test framework`, you should check `test` directory for example
 ---
 
 
