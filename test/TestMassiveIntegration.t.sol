@@ -59,7 +59,10 @@ contract TestMassiveIntegration is Test {
 
     function setUp() public {
         vm.createSelectFork(vm.rpcUrl("opbnb"));
-        key_owner = vm.envUint("CUSTOMER_KEY");
+        key_owner = uint256(keccak256(abi.encodePacked("demo key", block.timestamp)));
+        address user = vm.addr(key_owner);
+        vm.deal(user, 10 ether);
+        vm.label(user, "demo-user");
         diamondInit();
     }
 
