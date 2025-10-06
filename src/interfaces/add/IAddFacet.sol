@@ -8,7 +8,6 @@ pragma solidity ^0.8.26;
 /// Diamond Testing via OOP (DTO)
 */
 
-
 interface IAddFacet {
     function addValue(uint256 _value) external view returns (uint256);
     function init(uint256 _initialValue) external;

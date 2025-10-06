@@ -8,7 +8,6 @@ pragma solidity ^0.8.26;
 /// Diamond Testing via OOP (DTO)
 */
 
-
 interface IAdd13Facet {
     function whoami13() external view returns (string memory);
     function add13(uint256 _value) external pure returns (uint256);

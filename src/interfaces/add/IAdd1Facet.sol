@@ -10,7 +10,6 @@ pragma solidity ^0.8.26;
     =============================================================================
  */
 
-
 interface IAdd1Facet {
     function whoami1() external view returns (string memory);
     function add1(uint256 _value) external pure returns (uint256);

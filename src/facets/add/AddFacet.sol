@@ -10,7 +10,6 @@ import "../../interfaces/add/IAddFacet.sol";
 /// Diamond Testing via OOP (DTO)
 */
 
-
 contract AddFacet is IAddFacet {
     uint256 private s_value;
 
