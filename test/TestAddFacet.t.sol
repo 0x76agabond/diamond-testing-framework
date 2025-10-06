@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT
+//test/TestAddFacet.t.sol
 
-/******************************************************************************\
-* Author: Hoang <ginz1504@gmail.com>
-* Contact: https://github.com/0x76agabond 
-* =============================================================================
-* Diamond Testing via OOP (DTO)
-/******************************************************************************/
+/*
+/// Author: Hoang <ginz1504@gmail.com>
+/// Contact: https://github.com/0x76agabond
+/// =============================================================================
+/// Diamond Testing via OOP (DTO)
+*/
+
 
 pragma solidity ^0.8.26;
 
@@ -62,7 +64,7 @@ contract TestAddFacet is Test {
         Diamond diamond = new Diamond(address(this), address(cutFacet));
 
         // Cut in DiamondLoupeFacet
-        
+
         DiamondLoupeFacet loupe = new DiamondLoupeFacet();
         bytes4[] memory selectors = new bytes4[](4);
         selectors[0] = IDiamondLoupe.facets.selector;
@@ -75,12 +77,12 @@ contract TestAddFacet is Test {
             facetAddress: address(loupe),
             action: IDiamondCut.FacetCutAction.Add,
             functionSelectors: selectors
-        }); 
+        });
 
         IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
-        
+
         // Cut in AddFacet
-        
+
         uint256 initialValue = 200;
         AddFacet addFacetImplDiamond = new AddFacet();
         selectors = new bytes4[](3);
@@ -95,8 +97,10 @@ contract TestAddFacet is Test {
             functionSelectors: selectors
         });
 
-        IDiamondCut(address(diamond)).diamondCut(cut, address(addFacetImplDiamond), abi.encodeWithSelector(IAddFacet.init.selector, initialValue));
-        
+        IDiamondCut(address(diamond)).diamondCut(
+            cut, address(addFacetImplDiamond), abi.encodeWithSelector(IAddFacet.init.selector, initialValue)
+        );
+
         // Interact with AddFacet through Diamond
         IAddFacet addFacetDiamond = IAddFacet(address(diamond));
         assertEq(addFacetDiamond.getValue(), 200, "Initial value from Diamond AddFacet should be 200");

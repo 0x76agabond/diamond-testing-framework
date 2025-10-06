@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-/******************************************************************************\
-* Author: Hoang <ginz1504@gmail.com>
-* Contact: https://github.com/0x76agabond 
-* =============================================================================
-* Diamond Testing via OOP (DTO)
-/******************************************************************************/
+/*
+/// Author: Hoang <ginz1504@gmail.com>
+/// Contact: https://github.com/0x76agabond
+/// =============================================================================
+/// Diamond Testing via OOP (DTO)
+*/
 
 import {Diamond} from "../../src/Diamond.sol";
 import {IDiamondCut} from "../../src/interfaces/IDiamondCut.sol";
@@ -22,8 +22,7 @@ abstract contract tPrototype is Test {
     function buildCut() external view virtual returns (IDiamondCut.FacetCut[] memory);
 
     // basically same in all sub contract
-    function baseCut(address facet) internal view returns (IDiamondCut.FacetCut[] memory)
-    {        
+    function baseCut(address facet) internal view returns (IDiamondCut.FacetCut[] memory) {
         IDiamondCut.FacetCut[] memory cut = new IDiamondCut.FacetCut[](1);
         cut[0] = IDiamondCut.FacetCut({
             facetAddress: facet,
@@ -35,15 +34,13 @@ abstract contract tPrototype is Test {
     }
 }
 
-library CutUtil  
-{
+library CutUtil {
     // Because all tFacet (tAdd1Facet, tAdd2Facet...) inherit tPrototype we can setup it like this
-    function cutHelper(Diamond diamond, tPrototype temp, bytes memory data) internal returns (address)
-    {
-        IDiamondCut.FacetCut[] memory cut; 
+    function cutHelper(Diamond diamond, tPrototype temp, bytes memory data) internal returns (address) {
+        IDiamondCut.FacetCut[] memory cut;
         temp.setUp();
-        cut= temp.buildCut();
+        cut = temp.buildCut();
         IDiamondCut(address(diamond)).diamondCut(cut, address(diamond), data);
-        return(address(temp));
+        return (address(temp));
     }
-} 
+}

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-/******************************************************************************\
-* Author: Hoang <ginz1504@gmail.com>
-* Contact: https://github.com/0x76agabond 
-* =============================================================================
-* Diamond Testing via OOP (DTO)
-/******************************************************************************/
+/*
+/// Author: Hoang <ginz1504@gmail.com>
+/// Contact: https://github.com/0x76agabond
+/// =============================================================================
+/// Diamond Testing via OOP (DTO)
+*/
 
 pragma solidity ^0.8.26;
 
@@ -25,7 +25,7 @@ contract tAdd9Facet is tPrototype {
         selectors[2] = IAdd9Facet.add9error.selector;
     }
 
-    function buildCut() external override view returns (IDiamondCut.FacetCut[] memory) {
+    function buildCut() external view override returns (IDiamondCut.FacetCut[] memory) {
         return baseCut(address(facet));
     }
 }

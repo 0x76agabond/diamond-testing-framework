@@ -1,19 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
-/******************************************************************************\
-* Author: Hoang <ginz17504@gmail.com>
-* Contact: https://github.com/0x76agabond 
-* =============================================================================
-* Diamond Testing via OOP (DTO)
-/******************************************************************************/
+/*
+/// Author: Hoang <ginz1504@gmail.com>
+/// Contact: https://github.com/0x76agabond
+/// =============================================================================
+/// Diamond Testing via OOP (DTO)
+*/
 
-import { IAdd17Facet } from "../../interfaces/add/IAdd17Facet.sol";
+import {IAdd17Facet} from "../../interfaces/add/IAdd17Facet.sol";
 
 contract Add17Facet is IAdd17Facet {
-   
-    function whoami17() external pure returns (string memory)
-    {
+    function whoami17() external pure returns (string memory) {
         return "Add17Facet";
     }
 
@@ -26,5 +24,4 @@ contract Add17Facet is IAdd17Facet {
         uint256 y = 0;
         x = x / y; // Division by zero to cause a revert
     }
-
 }

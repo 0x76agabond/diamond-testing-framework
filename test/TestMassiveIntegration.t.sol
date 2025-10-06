@@ -1,26 +1,27 @@
 // SPDX-License-Identifier: MIT
-//test/Runner.t.sol
+//test/TestMassiveIntegration.t.sol
 
-/******************************************************************************
-* Author: Hoang <ginz1504@gmail.com>
-* Contact: https://github.com/0x76agabond 
-* =============================================================================
-* Diamond Testing via OOP (DTO)
-/******************************************************************************/
+/*
+/// Author: Hoang <ginz1504@gmail.com>
+/// Contact: https://github.com/0x76agabond
+/// =============================================================================
+/// Diamond Testing via OOP (DTO)
+*/
+
 
 pragma solidity ^0.8.26;
 
 import "forge-std/Test.sol";
 
-import {IAdd1Facet}  from "../src/interfaces/add/IAdd1Facet.sol";
-import {IAdd2Facet}  from "../src/interfaces/add/IAdd2Facet.sol";
-import {IAdd3Facet}  from "../src/interfaces/add/IAdd3Facet.sol";
-import {IAdd4Facet}  from "../src/interfaces/add/IAdd4Facet.sol";
-import {IAdd5Facet}  from "../src/interfaces/add/IAdd5Facet.sol";
-import {IAdd6Facet}  from "../src/interfaces/add/IAdd6Facet.sol";
-import {IAdd7Facet}  from "../src/interfaces/add/IAdd7Facet.sol";
-import {IAdd8Facet}  from "../src/interfaces/add/IAdd8Facet.sol";
-import {IAdd9Facet}  from "../src/interfaces/add/IAdd9Facet.sol";
+import {IAdd1Facet} from "../src/interfaces/add/IAdd1Facet.sol";
+import {IAdd2Facet} from "../src/interfaces/add/IAdd2Facet.sol";
+import {IAdd3Facet} from "../src/interfaces/add/IAdd3Facet.sol";
+import {IAdd4Facet} from "../src/interfaces/add/IAdd4Facet.sol";
+import {IAdd5Facet} from "../src/interfaces/add/IAdd5Facet.sol";
+import {IAdd6Facet} from "../src/interfaces/add/IAdd6Facet.sol";
+import {IAdd7Facet} from "../src/interfaces/add/IAdd7Facet.sol";
+import {IAdd8Facet} from "../src/interfaces/add/IAdd8Facet.sol";
+import {IAdd9Facet} from "../src/interfaces/add/IAdd9Facet.sol";
 import {IAdd10Facet} from "../src/interfaces/add/IAdd10Facet.sol";
 import {IAdd11Facet} from "../src/interfaces/add/IAdd11Facet.sol";
 import {IAdd12Facet} from "../src/interfaces/add/IAdd12Facet.sol";
@@ -30,15 +31,15 @@ import {IAdd15Facet} from "../src/interfaces/add/IAdd15Facet.sol";
 import {IAdd16Facet} from "../src/interfaces/add/IAdd16Facet.sol";
 import {IAdd17Facet} from "../src/interfaces/add/IAdd17Facet.sol";
 
-import {Add1Facet}  from "../src/facets/add/Add1Facet.sol";
-import {Add2Facet}  from "../src/facets/add/Add2Facet.sol";
-import {Add3Facet}  from "../src/facets/add/Add3Facet.sol";
-import {Add4Facet}  from "../src/facets/add/Add4Facet.sol";
-import {Add5Facet}  from "../src/facets/add/Add5Facet.sol";
-import {Add6Facet}  from "../src/facets/add/Add6Facet.sol";
-import {Add7Facet}  from "../src/facets/add/Add7Facet.sol";
-import {Add8Facet}  from "../src/facets/add/Add8Facet.sol";
-import {Add9Facet}  from "../src/facets/add/Add9Facet.sol";
+import {Add1Facet} from "../src/facets/add/Add1Facet.sol";
+import {Add2Facet} from "../src/facets/add/Add2Facet.sol";
+import {Add3Facet} from "../src/facets/add/Add3Facet.sol";
+import {Add4Facet} from "../src/facets/add/Add4Facet.sol";
+import {Add5Facet} from "../src/facets/add/Add5Facet.sol";
+import {Add6Facet} from "../src/facets/add/Add6Facet.sol";
+import {Add7Facet} from "../src/facets/add/Add7Facet.sol";
+import {Add8Facet} from "../src/facets/add/Add8Facet.sol";
+import {Add9Facet} from "../src/facets/add/Add9Facet.sol";
 import {Add10Facet} from "../src/facets/add/Add10Facet.sol";
 import {Add11Facet} from "../src/facets/add/Add11Facet.sol";
 import {Add12Facet} from "../src/facets/add/Add12Facet.sol";
@@ -54,7 +55,6 @@ import {DiamondLoupeFacet, IDiamondLoupe} from "../test/tContract/Implement/tDia
 import {Diamond} from "../src/Diamond.sol";
 
 contract TestMassiveIntegration is Test {
-    
     uint256 key_owner;
     Diamond diamond;
 
@@ -65,8 +65,8 @@ contract TestMassiveIntegration is Test {
     }
 
     // Init facet
-    // This use normal pattern to init diamond    
-    // This function demonstrates the Monolithic way to initialize a Diamond 
+    // This use normal pattern to init diamond
+    // This function demonstrates the Monolithic way to initialize a Diamond
     // for a test. It involves manually deploying and cutting each Facet one-by-one, resulting in a long, repetitive setup function.
     // TestInitDiamondWithDTO.t.sol
     function diamondInit() internal {
@@ -86,22 +86,22 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(loupe),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
-        }        
+        }
         {
             Add1Facet add1 = new Add1Facet();
             bytes4[] memory selectors = new bytes4[](2);
             selectors[0] = IAdd1Facet.whoami1.selector;
-            selectors[1] = IAdd1Facet.add1.selector;                    
+            selectors[1] = IAdd1Facet.add1.selector;
 
             IDiamondCut.FacetCut[] memory cut = new IDiamondCut.FacetCut[](1);
             cut[0] = IDiamondCut.FacetCut({
                 facetAddress: address(add1),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -116,7 +116,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add2),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -131,7 +131,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add3),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -146,7 +146,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add4),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -161,7 +161,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add5),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -176,7 +176,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add6),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -191,7 +191,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add7),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -206,7 +206,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add8),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -221,7 +221,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add9),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -236,7 +236,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add10),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -251,7 +251,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add11),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -266,7 +266,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add12),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -281,7 +281,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add13),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -296,7 +296,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add14),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -311,7 +311,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add15),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -326,7 +326,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add16),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -341,7 +341,7 @@ contract TestMassiveIntegration is Test {
                 facetAddress: address(add17),
                 action: IDiamondCut.FacetCutAction.Add,
                 functionSelectors: selectors
-            }); 
+            });
 
             IDiamondCut(address(diamond)).diamondCut(cut, address(0), "");
         }
@@ -350,22 +350,21 @@ contract TestMassiveIntegration is Test {
     // Test integration with multiple facet
     // This function serves not only as a test but also as a live implementation environment.
     // Other solution like struct / split function but those method will break the state
-    // For complicated functions, you can code directly here to see live results and debug.    
+    // For complicated functions, you can code directly here to see live results and debug.
     function test_massive_integration() public {
-
         {
             console.log(" ================================== ");
             address[] memory facets = IDiamondLoupe(address(diamond)).facetAddresses();
-            for (uint i = 0; i < facets.length; i++) {
+            for (uint256 i = 0; i < facets.length; i++) {
                 console.log(address(facets[i]));
             }
         }
         {
             console.log(IAdd17Facet(address(diamond)).whoami17());
         }
-        
+
         uint256 summer = 0;
-        
+
         // use Scope {}
         {
             summer = IAdd1Facet(address(diamond)).add1(summer);
@@ -415,8 +414,7 @@ contract TestMassiveIntegration is Test {
 
         // use Try / Catch pattern
         {
-            try IAdd10Facet(address(diamond)).add10(summer) 
-                returns (uint256 newSummer) {
+            try IAdd10Facet(address(diamond)).add10(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
             } catch {
@@ -424,8 +422,7 @@ contract TestMassiveIntegration is Test {
             }
         }
         {
-            try IAdd11Facet(address(diamond)).add11(summer) 
-                returns (uint256 newSummer) {
+            try IAdd11Facet(address(diamond)).add11(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
             } catch {
@@ -433,8 +430,7 @@ contract TestMassiveIntegration is Test {
             }
         }
         {
-            try IAdd12Facet(address(diamond)).add12(summer) 
-                returns (uint256 newSummer) {
+            try IAdd12Facet(address(diamond)).add12(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
             } catch {
@@ -442,8 +438,7 @@ contract TestMassiveIntegration is Test {
             }
         }
         {
-            try IAdd13Facet(address(diamond)).add13(summer) 
-                returns (uint256 newSummer) {
+            try IAdd13Facet(address(diamond)).add13(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
             } catch {
@@ -451,8 +446,7 @@ contract TestMassiveIntegration is Test {
             }
         }
         {
-            try IAdd14Facet(address(diamond)).add14(summer) 
-                returns (uint256 newSummer) {
+            try IAdd14Facet(address(diamond)).add14(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
             } catch {
@@ -460,8 +454,7 @@ contract TestMassiveIntegration is Test {
             }
         }
         {
-            try IAdd15Facet(address(diamond)).add15(summer) 
-                returns (uint256 newSummer) {
+            try IAdd15Facet(address(diamond)).add15(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
             } catch {
@@ -469,8 +462,7 @@ contract TestMassiveIntegration is Test {
             }
         }
         {
-            try IAdd16Facet(address(diamond)).add16(summer) 
-                returns (uint256 newSummer) {
+            try IAdd16Facet(address(diamond)).add16(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
             } catch {
@@ -478,12 +470,10 @@ contract TestMassiveIntegration is Test {
             }
         }
         {
-            try IAdd17Facet(address(diamond)).add17(summer) 
-                returns (uint256 newSummer) {
+            try IAdd17Facet(address(diamond)).add17(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
-            }
-            catch {
+            } catch {
                 console.log("Error calling add17");
             }
         }
@@ -609,6 +599,4 @@ contract TestMassiveIntegration is Test {
             }
         }
     }
-
-    
 }

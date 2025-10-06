@@ -3,6 +3,14 @@ pragma solidity ^0.8.26;
 
 import "../../interfaces/add/IAddFacet.sol";
 
+/*
+/// Author: Hoang <ginz1504@gmail.com>
+/// Contact: https://github.com/0x76agabond
+/// =============================================================================
+/// Diamond Testing via OOP (DTO)
+*/
+
+
 contract AddFacet is IAddFacet {
     uint256 private s_value;
 

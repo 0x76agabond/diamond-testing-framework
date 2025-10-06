@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
-//test/Runner_oop.t.sol
+//test/TestSetupDiamond.t.sol
 
-/******************************************************************************\
-* Author: Hoang <ginz1504@gmail.com>
-* Contact: https://github.com/0x76agabond 
-* =============================================================================
-* Diamond Testing via OOP (DTO)
-/******************************************************************************/
+/*
+/// Author: Hoang <ginz1504@gmail.com>
+/// Contact: https://github.com/0x76agabond
+/// =============================================================================
+/// Diamond Testing via OOP (DTO)
+*/
+
 
 pragma solidity ^0.8.26;
 
@@ -39,7 +40,6 @@ import {IAdd17Facet, tAdd17Facet} from "../test/tContract/Implement/tAdd17Facet.
 import {Diamond} from "../src/Diamond.sol";
 
 contract TestSetupDiamond is Test {
-    
     uint256 key_owner;
     Diamond diamond;
 
@@ -52,16 +52,15 @@ contract TestSetupDiamond is Test {
         setupDiamond();
     }
 
-    function setupDiamond() internal
-    {
+    function setupDiamond() internal {
         vm.startPrank(vm.addr(key_owner));
 
         // Deploy DiamondCutFacet and the main Diamond contract
         {
-            DiamondCutFacet cutFacet = new DiamondCutFacet();  
+            DiamondCutFacet cutFacet = new DiamondCutFacet();
             diamond = new Diamond(address(vm.addr(key_owner)), address(cutFacet));
         }
-                
+
         // start setup here
         {
             console.log(" ================================== ");
@@ -69,10 +68,10 @@ contract TestSetupDiamond is Test {
             console.log(" ================================== ");
 
             // Base utility facets
-            console.log(CutUtil.cutHelper(diamond, new tDiamondLoupe(), ""));  
+            console.log(CutUtil.cutHelper(diamond, new tDiamondLoupe(), ""));
 
-            // Functional modules              
-            console.log(CutUtil.cutHelper(diamond, new tAdd1Facet(), ""));   
+            // Functional modules
+            console.log(CutUtil.cutHelper(diamond, new tAdd1Facet(), ""));
             console.log(CutUtil.cutHelper(diamond, new tAdd2Facet(), ""));
             console.log(CutUtil.cutHelper(diamond, new tAdd3Facet(), ""));
             console.log(CutUtil.cutHelper(diamond, new tAdd4Facet(), ""));
@@ -81,34 +80,35 @@ contract TestSetupDiamond is Test {
             console.log(CutUtil.cutHelper(diamond, new tAdd7Facet(), ""));
             console.log(CutUtil.cutHelper(diamond, new tAdd8Facet(), ""));
             console.log(CutUtil.cutHelper(diamond, new tAdd9Facet(), ""));
-            console.log(CutUtil.cutHelper(diamond, new tAdd10Facet(),""));
-            console.log(CutUtil.cutHelper(diamond, new tAdd11Facet(),""));
-            console.log(CutUtil.cutHelper(diamond, new tAdd12Facet(),""));
-            console.log(CutUtil.cutHelper(diamond, new tAdd13Facet(),""));
-            console.log(CutUtil.cutHelper(diamond, new tAdd14Facet(),""));
-            console.log(CutUtil.cutHelper(diamond, new tAdd15Facet(),""));
-            console.log(CutUtil.cutHelper(diamond, new tAdd16Facet(),""));
-            console.log(CutUtil.cutHelper(diamond, new tAdd17Facet(),""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd10Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd11Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd12Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd13Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd14Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd15Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd16Facet(), ""));
+            console.log(CutUtil.cutHelper(diamond, new tAdd17Facet(), ""));
 
             // Initialization facet (with parameters)
-            console.log(CutUtil.cutHelper(diamond, new tAddFacet(), abi.encodeWithSelector(IAddFacet.init.selector, 500)));   
+            console.log(
+                CutUtil.cutHelper(diamond, new tAddFacet(), abi.encodeWithSelector(IAddFacet.init.selector, 500))
+            );
         }
 
         vm.stopPrank();
     }
-    
+
     // Test integration with multiple facet
     // This function serves not only as a test but also as a live implementation environment.
     // There are other solution like struct / split function but those method will break the state
-    // For complicated functions, you can code directly here to see live results and debug.    
+    // For complicated functions, you can code directly here to see live results and debug.
     function test_massive_integration() public {
-
         {
             console.log(" ================================== ");
             console.log(" IDiamondLoupe ");
             console.log(" ================================== ");
             address[] memory facets = IDiamondLoupe(address(diamond)).facetAddresses();
-            for (uint i = 0; i < facets.length; i++) {
+            for (uint256 i = 0; i < facets.length; i++) {
                 console.log(address(facets[i]));
             }
         }
@@ -118,9 +118,9 @@ contract TestSetupDiamond is Test {
             console.log(" ================================== ");
             console.log(IAdd17Facet(address(diamond)).whoami17());
         }
-        
+
         uint256 summer = 0;
-        
+
         console.log(" ================================== ");
         console.log(" test_massive_integration ");
         console.log(" use Scope {} ");
@@ -176,10 +176,9 @@ contract TestSetupDiamond is Test {
         console.log(" ================================== ");
         console.log(" test_massive_integration ");
         console.log(" use Try / Catch pattern ");
-        console.log(" ================================== ");        
+        console.log(" ================================== ");
         {
-            try IAdd10Facet(address(diamond)).add10(summer) 
-                returns (uint256 newSummer) {
+            try IAdd10Facet(address(diamond)).add10(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
             } catch {
@@ -187,8 +186,7 @@ contract TestSetupDiamond is Test {
             }
         }
         {
-            try IAdd11Facet(address(diamond)).add11(summer) 
-                returns (uint256 newSummer) {
+            try IAdd11Facet(address(diamond)).add11(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
             } catch {
@@ -196,8 +194,7 @@ contract TestSetupDiamond is Test {
             }
         }
         {
-            try IAdd12Facet(address(diamond)).add12(summer) 
-                returns (uint256 newSummer) {
+            try IAdd12Facet(address(diamond)).add12(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
             } catch {
@@ -205,8 +202,7 @@ contract TestSetupDiamond is Test {
             }
         }
         {
-            try IAdd13Facet(address(diamond)).add13(summer) 
-                returns (uint256 newSummer) {
+            try IAdd13Facet(address(diamond)).add13(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
             } catch {
@@ -214,8 +210,7 @@ contract TestSetupDiamond is Test {
             }
         }
         {
-            try IAdd14Facet(address(diamond)).add14(summer) 
-                returns (uint256 newSummer) {
+            try IAdd14Facet(address(diamond)).add14(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
             } catch {
@@ -223,8 +218,7 @@ contract TestSetupDiamond is Test {
             }
         }
         {
-            try IAdd15Facet(address(diamond)).add15(summer) 
-                returns (uint256 newSummer) {
+            try IAdd15Facet(address(diamond)).add15(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
             } catch {
@@ -232,8 +226,7 @@ contract TestSetupDiamond is Test {
             }
         }
         {
-            try IAdd16Facet(address(diamond)).add16(summer) 
-                returns (uint256 newSummer) {
+            try IAdd16Facet(address(diamond)).add16(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
             } catch {
@@ -241,12 +234,10 @@ contract TestSetupDiamond is Test {
             }
         }
         {
-            try IAdd17Facet(address(diamond)).add17(summer) 
-                returns (uint256 newSummer) {
+            try IAdd17Facet(address(diamond)).add17(summer) returns (uint256 newSummer) {
                 summer = newSummer;
                 console.log(summer);
-            }
-            catch {
+            } catch {
                 console.log("Error calling add17");
             }
         }
@@ -255,7 +246,7 @@ contract TestSetupDiamond is Test {
         console.log(" ================================== ");
         console.log(" test_massive_integration ");
         console.log(" use Try / Catch pattern - Failpath ");
-        console.log(" ================================== ");    
+        console.log(" ================================== ");
         {
             try IAdd1Facet(address(diamond)).add1error() {
                 console.log("add1error did not revert");
