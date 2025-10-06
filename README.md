@@ -90,16 +90,15 @@ The idea is simple:
 ## Requirements
 - Foundry 
 - Solidity 
-- .env with `CUSTOMER_KEY` //private key for deploy contract  
 - foundry.toml with `rpc_endpoints`
 
 ## Getting Started
 1. Clone repo  
 2. Run `forge install` (if needed)  
-3. Create `.env`
-4. Add `rpc_endpoints`
-5. forge build 
-6. forge test TestSetupDiamond.t -vvv
+3. Add `rpc_endpoints`
+4. forge build 
+5. forge test TestSetupDiamond.t -vvv
+* Since this is a `test framework`, you should check `test` directory for example
 ---
 
 
