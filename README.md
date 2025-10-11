@@ -191,3 +191,33 @@ function setupDiamond() internal
 
     vm.stopPrank();
 }
+
+```
+### Test Runner
+
+```solidity
+
+// test_massive_integration 
+// use scope {} and try/catch pattern
+
+{
+    try IAdd17Facet(address(diamond)).add17(summer) returns (uint256 newSummer) {
+        summer = newSummer;
+        console.log(summer);
+    } catch {
+        console.log("Error calling add17");
+    }
+}
+
+// handle Failpath
+console.log(" use Try / Catch pattern - Failpath ");
+console.log(" ================================== ");
+{
+    try IAdd1Facet(address(diamond)).add1error() {
+        console.log("add1error did not revert");
+    } catch {
+        console.log("add1error reverted as expected");
+    }
+}
+
+```
