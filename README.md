@@ -49,7 +49,7 @@ The idea is simple:
 - Each **tFacet** sets up selectors and builds the cut based on its Interface.  
 - **tPrototype** represents many **tFacet** just like the **Diamond** represents many **Facets** 
 
-![tPrototype → tFacet → Diamond diagram](https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/559113595_3269231586560079_674978664034589222_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEDWQFpwcr3ahVszVrGnouTo9rSqHWHl5yj2tKodYeXnIqp7j3AchPhatdELtGTo_TWqgmVeVapCcoYZFoBicEj&_nc_ohc=6FkXLyTeHuEQ7kNvwGqs80v&_nc_oc=AdnpCvBwBYPKmPSZn1_XvnvInbc-TqcYPYuO3Kj-iZ9uqFkPHn5Kh52muS8cqjVwavU&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=NKh_WN7fQv87NiHBXCVLSQ&oh=00_Affl4IqyC4i_WjCmzkGDgExjdavq95a8lm8TIJqt-uq62Q&oe=68E5DCA8)
+![tPrototype → tFacet → Diamond diagram](https://drive.usercontent.google.com/download?id=1R4Ce-FWj3l-AsoLmY-xqmX__ElcPTdgv&export=view&authuser=0)
 
 ---
 
