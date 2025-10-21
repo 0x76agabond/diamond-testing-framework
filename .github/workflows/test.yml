@@ -17,13 +17,11 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
-        with:
-          version: 9979a41b5daa5da1572d973d7ac5a3dd2afc0221
-
-      - name: Show Forge version
+      - name: Install Foundry v1.3.5-stable manually
         run: |
+          wget https://github.com/foundry-rs/foundry/releases/download/v1.3.5/foundry_v1.3.5_linux_amd64.tar.gz
+          tar -xzf foundry_v1.3.5_linux_amd64.tar.gz
+          sudo mv foundry/bin/* /usr/local/bin/
           forge --version
 
       - name: Run Forge fmt
